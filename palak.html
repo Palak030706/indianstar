@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid Pattern</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .pyramid {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="pyramid" id="pyramid"></div>
+
+    <script>
+        function printPyramid(rows) {
+            let pyramidElement = document.getElementById('pyramid');
+            for (let i = 1; i <= rows; i++) {
+                let row = '';
+                for (let j = 1; j <= rows - i; j++) {
+                    row += '&nbsp;&nbsp;';
+                }
+                for (let k = 0; k < 2 * i - 1; k++) {
+                    row += '*';
+                }
+                const rowElement = document.createElement('div');
+                rowElement.innerHTML = row;
+                pyramidElement.appendChild(rowElement);
+            }
+        }
+
+        printPyramid(5);  // You can change the number of rows here
+    </script>
+</body>
+</html>
