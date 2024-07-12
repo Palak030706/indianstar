@@ -1,37 +1,92 @@
-import os
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files Content</title>
+    <style>
+        pre {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contents of Files</h1>
 
-# List of file paths to include in the HTML
-file_paths = [
-    'abcd.txt',
-    'palak.txt',
-    'README.md'
-]
+    <h2>Contents of file1.txt</h2>
+    <pre>
+        <!-- Paste the content of file1.txt here -->
+        addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
 
-# Function to read file contents
-def read_file(file_path):
-    with open(file_path, 'r') as file:
-        return file.read()
+async function handleRequest(request) {
+  // The image URL or the KV key for the image
+  const imageUrl = 'https://example.com/your-image.jpg';
 
-# Function to generate HTML content
-def generate_html(file_paths):
-    html_content = "<html>\n<head>\n<title>Files Content</title>\n</head>\n<body>\n"
-    
-    for file_path in file_paths:
-        if os.path.exists(file_path):
-            file_content = read_file(file_path)
-            html_content += f"<h2>Contents of {abcd.txt}</h2>\n<pre>{file_content}</pre>\n"
-        else:
-            html_content += f"<h2>Contents of {}</h2>\n<p>File not found.</p>\n"
-    
-    html_content += "</body>\n</html>"
-    return html_content
+  // Fetch the image from the URL
+  const response = await fetch(imageUrl);
 
-# Generate HTML content
-html_output = generate_html(file_paths)
+  if (!response.ok) {
+    return new Response('Image not found', { status: 404 });
+  }
 
-# Write HTML content to a file
-output_file_path = 'output.html'
-with open(output_file_path, 'w') as output_file:
-    output_file.write(html_output)
+  // Return the image response
+  return new Response(response.body, {
+    headers: {
+      'Content-Type': 'image/jpeg',
+    },
+  });
+}
 
-print(f"HTML file generated: {output_file_path}")
+    </pre>
+
+    <h2>Contents of file2.txt</h2>
+    <pre>
+        <!-- Paste the content of file2.txt here -->
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print ABC</title>
+</head>
+<body>
+    <div id="output"></div>
+
+    <script>
+        function printABC() {
+            let outputElement = document.getElementById('output');
+            outputElement.innerText = 'ABC';
+        }
+
+        printABC();
+    </script>
+</body>
+</html>
+
+    </pre>
+
+    <h2>Contents of file3.txt</h2>
+    <pre>
+        <!-- Paste the content of file3.txt here -->
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print ABC</title>
+</head>
+<body>
+    <div id="output">ABC</div>
+</body>
+</html>
+
+    </pre>
+</body>
+</html>
+
+
+
