@@ -2,8 +2,8 @@ import os
 
 # List of file paths to include in the HTML
 file_paths = [
-    'abcd.html',
-    'palak.html',
+    'abcd.txt',
+    'palak.txt',
     'README.md'
 ]
 
@@ -19,7 +19,7 @@ def generate_html(file_paths):
     for file_path in file_paths:
         if os.path.exists(file_path):
             file_content = read_file(file_path)
-            html_content += f"<h2>Contents of {abcd.html}</h2>\n<pre>{file_content}</pre>\n"
+            html_content += f"<h2>Contents of {abcd.txt}</h2>\n<pre>{file_content}</pre>\n"
         else:
             html_content += f"<h2>Contents of {palak.html</h2>\n<p>File not found.</p>\n"
     
