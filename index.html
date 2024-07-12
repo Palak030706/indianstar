@@ -18,28 +18,18 @@
     <h2>Contents of file1.txt</h2>
     <pre>
         <!-- Paste the content of file1.txt here -->
-        addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Star</title>
+</head>
+<body>
+    <div id="output">*</div>
+</body>
+</html>
 
-async function handleRequest(request) {
-  // The image URL or the KV key for the image
-  const imageUrl = 'https://tse2.mm.bing.net/th?id=OIP.coH8EsqHkmkvC7PkRI1ORgHaE8&pid=Api&P=0&h=180';
-
-  // Fetch the image from the URL
-  const response = await fetch(https://tse2.mm.bing.net/th?id=OIP.coH8EsqHkmkvC7PkRI1ORgHaE8&pid=Api&P=0&h=180);
-
-  if (!response.ok) {
-    return new Response('Image not found', { status: 404 });
-  }
-
-  // Return the image response
-  return new Response(response.body, {
-    headers: {
-      'Content-Type': 'image/jpeg',
-    },
-  });
-}
 
     </pre>
 
