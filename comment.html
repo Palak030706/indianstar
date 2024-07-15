@@ -1,72 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comment Box</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .comment-box {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .comment-form {
-            margin-bottom: 20px;
-        }
-        .comment-form textarea {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .comment-form button {
-            display: block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .comment-form button:hover {
-            background-color: #0056b3;
-        }
-        .comments {
-            list-style: none;
-            padding: 0;
-        }
-        .comments li {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment Counter</title>
+  <style>
+    .comment-box {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-    <div class="comment-box">
-        <div class="comment-form">
-            <textarea id="comment-input" rows="4" placeholder="Enter your comment..."></textarea>
-            <button onclick="addComment()">Add Comment</button>
-        </div>
-        <ul class="comments" id="comment-list"></ul>
-    </div>
-
-    <script>
-        function addComment() {
-            const commentInput = document.getElementById('comment-input');
-            const commentList = document.getElementById('comment-list');
-
-            if (commentInput.value.trim() !== '') {
-                const newComment = document.createElement('li');
-                newComment.textContent = commentInput.value;
-                commentList.appendChild(newComment);
-                commentInput.value = '';
-            }
-        }
-    </script>
+  <h1>Comment Counter</h1>
+  
+  <div>
+    <label for="comment">Add Comment:</label><br>
+    <textarea id="comment" rows="4" cols="50"></textarea><br>
+    <button onclick="addComment()">Add Comment</button>
+  </div>
+  
+  <div id="commentList">
+    <!-- Comments will be added here dynamically -->
+  </div>
+  
+  <script src="script.js"></script>
 </body>
 </html>
+
 
