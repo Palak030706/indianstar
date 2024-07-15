@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persistent Counter Example</title>
+  <script>
+    // Function to increment and display the counter
+    function incrementCounter() {
+      if (localStorage.getItem("counter")) {
+        var counter = parseInt(localStorage.getItem("counter"));
+        counter++;
+      } else {
+        var counter = 1;
+      }
+      localStorage.setItem("counter", counter);
+      document.getElementById("counterDisplay").textContent = counter;
+    }
+
+    // Function to initialize the counter on page load
+    function initializeCounter() {
+      var counter = localStorage.getItem("counter");
+      if (counter) {
+        document.getElementById("counterDisplay").textContent = counter;
+      } else {
+        document.getElementById("counterDisplay").textContent = 0;
+      }
+    }
+  </script>
+</head>
+<body onload="initializeCounter()">
+  <h1>Counter: <span id="counterDisplay">0</span></h1>
+  <button onclick="incrementCounter()">Increment</button>
+</body>
+</html>
