@@ -1,5 +1,5 @@
-const { getKVNamespace } = require('@cloudflare/workers-kv');
-const counters = getKVNamespace('YOUR_KV_NAMESPACE_ID');
+const { getKVNamespace } = require('@cloudflare/workers-COUNTER_NAMESPACE');
+const counters = getKVNamespace('78a463b6c6fd4132a527e8a9d212348f');
 
 async function initializeCounter() {
     const counter = await counters.get('counter');
