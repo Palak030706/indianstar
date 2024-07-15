@@ -1,0 +1,6 @@
+async function incrementCounter() {
+    let counter = await counters.get('counter');
+    counter = parseInt(counter, 10) + 1;
+    await counters.put('counter', counter.toString());
+    return counter;
+}
