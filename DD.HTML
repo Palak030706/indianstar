@@ -4,5 +4,3 @@ async function incrementCounter() {
     await counters.put('counter', counter.toString());
     return counter;
 }
-const { COUNTER_NAMESPACE} = require('@cloudflare/workers-kv');
-const counters = getKVNamespace('78a463b6c6fd4132a527e8a9d212348f');
