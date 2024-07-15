@@ -49,5 +49,30 @@
 <body onload="initializeCounter()">
   <h1>Counter: <span id="counterDisplay">0</span></h1>
   <button onclick="incrementCounter()">Increment</button>
+  </head>
+<body>
+    <div class="comment-box">
+        <div class="comment-form">
+            <textarea id="comment-input" rows="4" placeholder="Enter your comment..."></textarea>
+            <button onclick="addComment()">Add Comment</button>
+        </div>
+        <ul class="comments" id="comment-list"></ul>
+    </div>
+
+    <script>
+        function addComment() {
+            const commentInput = document.getElementById('comment-input');
+            const commentList = document.getElementById('comment-list');
+
+            if (commentInput.value.trim() !== '') {
+                const newComment = document.createElement('li');
+                newComment.textContent = commentInput.value;
+                commentList.appendChild(newComment);
+                commentInput.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
 </body>
 </html>
