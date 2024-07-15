@@ -1,39 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Increment Button Example</title>
-<style>
-    .container {
-        text-align: center;
-        margin-top: 50px;
-    }
-    .counter {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-</style>
-</head>
-<body>
-<div class="container">
-    <h2>Increment Example</h2>
-    <div class="counter">0</div>
-    <button onclick="increment()">Increment</button>
-</div>
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
 
-<script>
-    let count = 0;
+const COUNTER_NAMESPACE =Count // Replace with your actual KV namespace binding
 
-    function increment() {
-        count++;
-        document.querySelector('.counter').innerText = count;
-    }
-</script>
-</body>
-</html>
+async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  if (url.pathname === '/increment') {
+    let currentCount = await COUNTER_NAMESPACE.get('counter')
+    currentCount = currentCount ? parseInt(currentCount) : 0;
+    const newCount = currentCount + 1;
+    await COUNTER_NAMESPACE.put('counter', newCount.toString());
+    return new Response(newCount.toString(), { status: 200});
+  }
+  else if (url.pathname === '/refresh') {
+    let currentCount = await COUNTER_NAMESPACE.get('counter');
+    currentCount = currentCount ? parseInt(currentCount) : 0;
+    return new Response(currentCount);
+  }
+
+
+  // Serve the HTML page
+  return new Response(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Counter Button</title>
+      </head>
+      <body>
+        <button id="counterButton">Increment Counter</button>
+        <p>Count: <span id="count">0</span></p>
+        <script>
+          async function updateCount() {
+            const response = await fetch('/increment');
+            const count = await response.text();
+            document.getElementById('count').textContent = count;
+            
+          }
+               document.getElementById('counterButton').addEventListener('click', updateCount);
+        </script>
+      </body>
+    </html>
+  `, {
+    headers: { 'Content-Type': 'text/html' },
+  });
+}   
