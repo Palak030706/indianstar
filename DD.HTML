@@ -1,6 +1,32 @@
+const { getKVNamespace } = require('@cloudflare/workers-kv');
+const counters = getKVNamespace('YOUR_KV_NAMESPACE_ID');
+
+async function initializeCounter() {
+    const counter = await counters.get('counter');
+    if (!counter) {
+        await counters.put('counter', '0');
+    }
+}
+
 async function incrementCounter() {
     let counter = await counters.get('counter');
     counter = parseInt(counter, 10) + 1;
     await counters.put('counter', counter.toString());
     return counter;
+}
+
+addEventListener('fetch', event => {
+    event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+    await initializeCounter();
+
+    if (request.url.endsWith('/increment')) {
+        const newCount = await incrementCounter();
+        return new Response(`Counter incremented! New count: ${newCount}`);
+    } else {
+        const currentCount = await counters.get('counter');
+        return new Response(`Current count: ${currentCount}`);
+    }
 }
