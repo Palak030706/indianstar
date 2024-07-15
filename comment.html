@@ -4,17 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comment Box</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .comment-box {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .comment-form {
+            margin-bottom: 20px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .comment-form button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .comment-form button:hover {
+            background-color: #0056b3;
+        }
+        .comments {
+            list-style: none;
+            padding: 0;
+        }
+        .comments li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
     <div class="comment-box">
-        <h2>Leave a Comment</h2>
-        <textarea id="comment" placeholder="Write your comment here..."></textarea>
-        <button onclick="submitComment()">Submit</button>
+        <div class="comment-form">
+            <textarea id="comment-input" rows="4" placeholder="Enter your comment..."></textarea>
+            <button onclick="addComment()">Add Comment</button>
+        </div>
+        <ul class="comments" id="comment-list"></ul>
     </div>
-    <div id="comments-section">
-        <h2>Comments</h2>
-    </div>
-    <script src="script.js"></script>
+
+    <script>
+        function addComment() {
+            const commentInput = document.getElementById('comment-input');
+            const commentList = document.getElementById('comment-list');
+
+            if (commentInput.value.trim() !== '') {
+                const newComment = document.createElement('li');
+                newComment.textContent = commentInput.value;
+                commentList.appendChild(newComment);
+                commentInput.value = '';
+            }
+        }
+    </script>
 </body>
 </html>
+
