@@ -27,8 +27,8 @@
     <div class="counter">
         <h1>Counter: <span id="count">0</span></h1>
         <button onclick="increment()">Increment</button>
-        <button onclick="decrement()">Decrement</button>
-        <button onclick="reset()">Reset</button>
+        <button onclick="refresh()">refresh</button>
+      
     </div>
     <script>
         let count = 0;
@@ -41,14 +41,8 @@
             count++;
             updateCounter();
         }
-        
-        function decrement() {
-            count--;
-            updateCounter();
-        }
-        
-        function reset() {
-            count = 0;
+        function refresh() {
+            count = imcrment;
             updateCounter();
         }
     </script>
