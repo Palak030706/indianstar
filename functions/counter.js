@@ -1,18 +1,15 @@
-// Worker script
-  export async function handleRequest(context) {
-    const COUNTER = context.env;
-    const {searchParams}= new URL(context.request.url);
-    const {action}=searchParams.get('action');
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
 
-  // Fetch the current counter value
-    let counterValue = await COUNTER.get('counter')
-    counterValue = parseInt(counterValue);
-    if (action=== increment) {
-      counterValue = +1
-      }
-    // Store the new counter value
-    await COUNTER.put('counter', counterValue);
-  
-    // Return the current counter value as the response
-    return new Response(`Counter value`);
+async function handleRequest(request) {
+  const url = new URL(request.url)
+
+  if (url.pathname === '/store') {
+      const { key, value } = await request.json()
+      await COUNTER.put(key, value)
+      return new Response('Stored successfully', { status: 200 })
+  }
+
+  return new Response('Not found', { status: 404 })
 }
