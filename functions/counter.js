@@ -6,15 +6,10 @@
 
   // Fetch the current counter value
     let counterValue = await COUNTER.get('counter')
-    if (counterValue === null) {
-      counterValue = 0
-    } else {
-      counterValue = parseInt(counterValue)
-    }
-  
-    // Increment the counter
-    counterValue += 1
-  
+    counterValue = parseInt(counterValue);
+    if (action=== increment) {
+      counterValue = +1
+      }
     // Store the new counter value
     await COUNTER.put('counter', counterValue);
   
