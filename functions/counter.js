@@ -1,13 +1,11 @@
 // Worker script
-addEventListener('fetch', event => {
-    event.respondWith(handleRequest(event.request))
-  })
-  
-  async function handleRequest(request) {
-    const counterNamespace = COUNTER // Replace with your namespace binding
-  
-    // Fetch the current counter value
-    let counterValue = await counterNamespace.get('counter')
+  export async function handleRequest(context) {
+    const COUNTER = context.env;
+    const {searchParams}= new URL(context.request.url);
+    const {action}=searchParams.get('action');
+
+  // Fetch the current counter value
+    let counterValue = await COUNTER.get('counter')
     if (counterValue === null) {
       counterValue = 0
     } else {
@@ -18,10 +16,8 @@ addEventListener('fetch', event => {
     counterValue += 1
   
     // Store the new counter value
-    await counterNamespace.put('counter', counterValue.toString())
+    await COUNTER.put('counter', counterValue);
   
     // Return the current counter value as the response
-    return new Response(`Counter value: ${counterValue}`, {
-      headers: { 'content-type': 'text/plain' },
-    })
-  }
+    return new Response(`Counter value`);
+}
