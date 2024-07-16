@@ -1,5 +1,3 @@
-export default {
-  async fetch(request, env, ctx) {
-    return new Response('Hello World!');
-  },
-};
+export function onRequest(context){
+  return newRespnse("Hello, world!")
+}
