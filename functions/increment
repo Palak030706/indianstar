@@ -1,29 +1,28 @@
+// Worker script
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
 
 async function handleRequest(request) {
-  const url = new URL(request.url)
-  
-  if (url.pathname === '/increment') {
-    return incrementCounter()
-  } else if (url.pathname === '/value') {
-    return getCounterValue()
+  const counterNamespace = COUNTER // Replace with your namespace binding
+
+  // Fetch the current counter value
+  let counterValue = await counterNamespace.get('counter')
+  if (counterValue === null) {
+    counterValue = 0
   } else {
-    return new Response('Not found', { status: 404 })
+    counterValue = parseInt(counterValue)
   }
+
+  // Increment the counter
+  counterValue += 1
+
+  // Store the new counter value
+  await counterNamespace.put('counter', counterValue.toString())
+
+  // Return the current counter value as the response
+  return new Response(`Counter value: ${counterValue}`, {
+    headers: { 'content-type': 'text/plain' },
+  })
 }
 
-async function incrementCounter() {
-  const counter = await COUNTER.get('counter')
-  let value = parseInt(counter) || 0
-  value += 1
-  await COUNTER.put('counter', value.toString())
-  return new Response(value.toString(), { status: 200 })
-}
-
-async function getCounterValue() {
-  const counter = await COUNTER.get('counter')
-  const value = counter ? parseInt(counter) : 0
-  return new Response(value.toString(), { status: 200 })
-}
