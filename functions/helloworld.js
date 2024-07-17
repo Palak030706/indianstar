@@ -1,5 +1,8 @@
 export async function onRequest(context) {
   const { MYKV } = context.env;
-  const counterValue = await MYKV.get('counter');
+ let counterValue = await MYKVget('counter');
+  counterValue = parseInt(counterValue) || 0;
+  counterValue += 1;
+  await MYKV.put('counter', counterValue);
   return new Response(counterValue);
 }
