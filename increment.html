@@ -3,21 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Initial Value Fetch</title>
+  <title>Counter</title>
+  <script>
+    async function updateCounter() {
+      try {
+        const response = await fetch('/helloworld');
+        const counter = await response.text();
+        document.getElementById('counter').innerText = counter;
+      } catch (error) {
+        console.error('Error fetching counter:', error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCounter();
+    });
+  </script>
 </head>
 <body>
-  <p>The initial value of kv is: <span id="MYKV"></span></p>
-  <button onclick="incrementKV()">Increment KV</button>
-
-  <script>
-   // Initialize kv value (assuming it starts at 0)
-   var kv = 0;
-
-// Function to increment kv value
-function incrementKV() {
-  kv++;
-  document.getElementById("MYKV").innerText = kv;
-}
-  </script>
+  <h1>Counter Value</h1>
+  <p id="counter">Loading...</p>
 </body>
 </html>
