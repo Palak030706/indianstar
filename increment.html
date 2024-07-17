@@ -28,19 +28,19 @@
   <script>
     // Function to increment and display the counter
     function incrementCounter() {
-      if (localStorage.getItem("counter")) {
-        var counter = parseInt(localStorage.getItem("counter"));
+      if (MYKV.getItem("counter")) {
+        var counter = parseInt(MYKV.getItem("counter"));
         counter++;
       } else {
         var counter = 1;
       }
-      localStorage.setItem("counter", counter);
+      MYKV.setItem("counter", counter);
       document.getElementById("counterDisplay").textContent = counter;
     }
 
     // Function to initialize the counter on page load
     function initializeCounter() {
-      var counter = localStorage.getItem("counter");
+      var counter = MYKV.getItem("counter");
       if (counter) {
         document.getElementById("counterDisplay").textContent = counter;
       } else {
