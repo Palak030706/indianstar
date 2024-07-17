@@ -3,25 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Counter</title>
+  <title>Increment Counter</title>
   <script>
-    async function incrementCounter() {
-      const response = await fetch('/increment', {
-        method: 'POST'
-      });
+    async function fetchCounter() {
+      const response = await fetch('/increment', { method: 'POST' });
       const text = await response.text();
-      document.getElementById('counter').innerText = text.split(' ')[2];
+      const counterValue = text.match(/Counter value is (\d+)/)[1];
+      document.getElementById('counter').innerText = counterValue;
     }
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-      // Initialize counter value on page load
-      incrementCounter();
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchCounter();
     });
+
+    async function incrementCounter() {
+      await fetchCounter();
+    }
   </script>
 </head>
 <body>
-  <h1>Counter Value: <span id="counter"></span></h1>
+  <h1>Counter Value: <span id="counter">0</span></h1>
   <button onclick="incrementCounter()">Increment Counter</button>
 </body>
 </html>
+
 
