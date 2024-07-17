@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Counter</title>
   <script>
-    async function updateCounter() {
-      try {
-        const response = await fetch('/helloworld');
-        const counter = await response.text();
-        document.getElementById('counter').innerText = counter;
-      } catch (error) {
-        console.error('Error fetching counter:', error);
-      }
+    async function incrementCounter() {
+      const response = await fetch('/increment', {
+        method: 'POST'
+      });
+      const text = await response.text();
+      document.getElementById('counter').innerText = text.split(' ')[2];
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      updateCounter();
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // Initialize counter value on page load
+      incrementCounter();
     });
   </script>
 </head>
 <body>
-  <h1>Counter Value</h1>
-  <p id="counter">Loading...</p>
+  <h1>Counter Value: <span id="counter"></span></h1>
+  <button onclick="incrementCounter()">Increment Counter</button>
 </body>
 </html>
+
