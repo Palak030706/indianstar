@@ -1,6 +1,6 @@
 export async function onRequest(context) {
-  const {COUNTER_NAMESPACE} = context.env;
+  const {MYKV} = context.env;
   let counterValue = 0;
-  await COUNT.put( 'counter',counterValue);
+  await MYKV.put( 'counter',counterValue);
   return new Response("counterValue");
 }
