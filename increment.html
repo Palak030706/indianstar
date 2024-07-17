@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Initial Value Display</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Increment Button</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }  </style>
 </head>
-<body>
-  <p>The initial value of kv is: <span id="MYKV"></span></p>
+        async function fetchInitialValue() {
+  try {
+      const response = await fetch('/countervalue');
+      if (response.ok) {
+          const data = await response;
+          counterValue = data;
+          document.getElementById("counter").innerText = counterValue;
+      } else {
+          console.error('Failed to fetch initial value');
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
+}
 
-  <script>
-    // Example initial value (assuming kv is a simple text value)
-    var kv = "initial text value";
-
-    // Display initial value
-    document.getElementById("counter").innerText = MYKV;
-  </script>
+// Fetch and set the initial value when the page loads
+window.onload = function() {
+  fetchInitialValue();
+};
+</script>
 </body>
 </html>
