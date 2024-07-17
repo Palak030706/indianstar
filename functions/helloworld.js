@@ -1,6 +1,6 @@
 export async function onRequest(context) {
   const {MYKV} = context.env;
-  let counterValue = 0;
+  let counterValue;
   await MYKV.put( 'counter',counterValue);
-  return new Response("counterValue");
+  return new Response(MYKV);
 }
