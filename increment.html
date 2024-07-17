@@ -29,35 +29,8 @@
 
   <!-- Increment button -->
   <button onclick="increment()">Increment</button>
-
-  <!-- Counter display -->
-  <p>Count: <span id="counter">0</span></p>
-
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Increment Counter</title>
-  <script>
-    async function fetchCounter() {
-      const response = await fetch('/increment', { method: 'POST' });
-      const text = await response.text();
-      const counterValue = text.match(/Counter value is (\d+)/)[1];
-      document.getElementById('counter').innerText = counterValue;
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      fetchCounter();
-    });
-
-    async function incrementCounter() {
-      await fetchCounter();
-    }
-  </script>
-</head>
-<body>
-  <h1>Counter Value: <span id="counter">0</span></h1>
-  <button onclick="incrementCounter()">Increment Counter</button>
 </body>
 </html>
+
 
 
