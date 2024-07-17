@@ -1,82 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Counter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrement <Button></Button></title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
         }
         .counter {
-            text-align: upwards;
+            font-size: 48px;
+            margin-bottom: 20px;
         }
-       .comment {
-         text-align: downwards;
-       }
         button {
+            font-size: 24px;
             padding: 10px 20px;
-            font-size: 16px;
-            margin: 5px;
         }
     </style>
-  <script>
-    // Function to increment and display the counter
-    function incrementCounter() {
-      if (MYKV.getItem("counter")) {
-        var counter = parseInt(MYKV.getItem("counter"));
-        counter++;
-      } else {
-        var counter = 1;
-      }
-      MYKV.setItem("counter", counter);
-      document.getElementById("counterDisplay").textContent = counter;
-    }
-
-    // Function to initialize the counter on page load
-    function initializeCounter() {
-      var counter = MYKV.getItem("counter");
-      if (counter) {
-        document.getElementById("counterDisplay").textContent = counter;
-      } else {
-        document.getElementById("counterDisplay").textContent = 0;
-      }
-    }
-  </script>
 </head>
-<body onload="initializeCounter()">
-  <h1>Counter: <span id="counterDisplay">0</span></h1>
-  <button onclick="incrementCounter()">Increment</button>
-  </head>
 <body>
-    <div class="comment-box">
-        <div class="comment-form">
-            <textarea id="comment-input" rows="4" placeholder="Enter your comment..."></textarea>
-            <button onclick="addComment()">Add Comment</button>
-        </div>
-        <ul class="comments" id="comment-list"></ul>
+    <div class="container">
+        <div class="Increment" id="Increment">100</div>
+        <button onclick="IncrementCounter()">Increment</button>
     </div>
-
     <script>
-        function addComment() {
-            const commentInput = document.getElementById('comment-input');
-            const commentList = document.getElementById('comment-list');
-
-            if (commentInput.value.trim() !== '') {
-                const newComment = document.createElement('li');
-                newComment.textContent = commentInput.value;
-                commentList.appendChild(newComment);
-                commentInput.value = '';
+        async function IncrementCounter() {
+            try {
+                const response = await fetch('/helloworld');
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("Increment").innerText = counterValue;
+                } else {
+                    console.error('Failed to fetch initial value');
+                }
+            } catch (error) {
+                console.error('Error:', error);
             }
         }
-      
-      </script>
-</body>
-</html>
-</body>
-</html>
