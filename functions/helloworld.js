@@ -1,5 +1,5 @@
 export async function onRequest(context) {
-  const { MYKVSTORE } = context.env;
-  const counterValue = await MYKVS.get('Counter');
+  const { MYKV } = context.env;
+  const counterValue = await MYKV.get('Counter');
   return new Response(counterValue);
 }
