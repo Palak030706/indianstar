@@ -6,15 +6,14 @@
   <title>Initial Value Display</title>
 </head>
 <body>
-  <p id="initialValueDisplay"></p>
+  <p>The initial value of kv is: <span id="kvValue"></span></p>
 
   <script>
-    // Example initial value
-    var kv = { key: "value" };
+    // Example initial value (assuming kv is a simple text value)
+    var kv = "initial text value";
 
     // Display initial value
-    document.getElementById("counter").innerText = JSON.stringify(MYKV);
+    document.getElementById("counter").innerText = MYKV;
   </script>
 </body>
 </html>
-
