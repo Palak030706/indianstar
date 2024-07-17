@@ -1,32 +1,31 @@
-export  async function onRequest(context) {
-  const { request, env } = context;
-  const url = new URL(request.url);
-  const counterKey = 'counter';
-  
-  // Fetch the current counter value from KV
-  let counterValue = await env.COUNTER_NAMESPACE.get(counterKey);
-  counterValue = counterValue ? parseInt(counterValue) : 0;
-  
-  if (url.pathname === '/api/increment') {
-  // Increment counter
-  counterValue += 1;
-  await env.COUNTER_NAMESPACE.put(counterKey, counterValue.toString());
-  return new Response(`Counter incremented to ${counterValue}`, { status: 200 });
-  } else if (url.pathname === '/api/decrement') {
-  // Decrement counter
-  counterValue -= 1;
-  await env.COUNTER_NAMESPACE.put(counterKey, counterValue.toString());
-  return new Response(`Counter decremented to ${counterValue}`, { status: 200 });
-  } else if (url.pathname === '/api/reset') {
-  // Reset counter
-  counterValue = 0;
-  await env.COUNTER_NAMESPACE.put(counterKey, counterValue.toString());
-  return new Response(`Counter reset to ${counterValue}`, { status: 200 });
-  } else if (url.pathname === '/api/get') {
-  // Get counter value
-  return new Response(`Counter value is ${counterValue}`, { status: 200 });
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const url = new URL(request.url)
+  const path = url.pathname
+
+  // Initialize the KV namespace
+  const kv = VIEW_COUNTER
+
+  // Get the current count from KV
+  let count = await kv.get(path)
+
+  // If there's no count yet, initialize it
+  if (count === null) {
+    count = 0
+  } else {
+    count = parseInt(count)
   }
-  
-  return new Response('Not found', { status: 404 });
-  }
+
+  // Increment the count
+  count++
+
+  // Store the new count in KV
+  await kv.put(path, count.toString())
+
+  // Return the count as the response
+  return new Response(`This page has been viewed ${count} times.`)
+}
   
