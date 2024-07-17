@@ -7,7 +7,7 @@ async function handleRequest(request) {
   const path = url.pathname
 
   // Initialize the KV namespace
-  const kv = VIEW_COUNTER
+  const kv = COUNTER_NAMESPACE
 
   // Get the current count from KV
   let count = await kv.get(path)
