@@ -1,47 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Increment <Button></Button></title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            text-align: center;
-        }
-        .counter {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        button {
-            font-size: 24px;
-            padding: 10px 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Initial Value Display</title>
 </head>
 <body>
-    <div class="container">
-        <div class="Increment" id="Increment">100</div>
-        <button onclick="IncrementCounter()">Increment</button>
-    </div>
-    <script>
-        async function IncrementCounter() {
-            try {
-                const response = await fetch('/helloworld');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("Increment").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
+  <p id="initialValueDisplay"></p>
+
+  <script>
+    // Example initial value
+    var MYKV = { key: "value" };
+
+    // Display initial value
+    document.getElementById("initialValueDisplay").innerText = JSON.stringify(MYKV);
+  </script>
+</body>
+</html>
