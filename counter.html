@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Increment Counter</title>
+    <title>Counter</title>
     <style>
         body {
             display: flex;
@@ -30,12 +30,27 @@
     <div class="counter-container">
         <div class="counter" id="counter">Loading...</div>
         <button onclick="incrementCounter()">Increment</button>
+        <button onclick="decrementCounter()">Decrement</button>
     </div>
 
     <script>
         async function incrementCounter() {
      try {
                 const response = await fetch('/increment');
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("counter").innerText = counterValue;
+                } else {
+                    console.error('Failed to fetch initial value');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        async function decrementCounter() {
+     try {
+                const response = await fetch('/decrement');
                 if (response.ok) {
                     const data = await response.text();
                     counterValue = data;
