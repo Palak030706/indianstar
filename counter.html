@@ -33,35 +33,39 @@
     </div>
 
     <script>
-        let count = 0;
-        async function fetchCounter() {
+        async function incrementCounter() {
+     try {
+                const response = await fetch('/increment');
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("counter").innerText = counterValue;
+                } else {
+                    console.error('Failed to fetch initial value');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        // Function to fetch the initial value
+        async function fetchInitialValue() {
             try {
                 const response = await fetch('/helloworld');
-                const text = await response.text();
-                count = parseInt(text, 10);
-                document.getElementById('counter').innerText = count;
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("counter").innerText = counterValue;
+                } else {
+                    console.error('Failed to fetch initial value');
+                }
             } catch (error) {
-                console.error('Error fetching the counter:', error);
-                document.getElementById('counter').innerText = 'Error';
+                console.error('Error:', error);
             }
         }
-
-        async function incrementCounter() {
-            count++;
-            document.getElementById('counter').innerText = count;
-            try {
-                await fetch('/increment', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain'
-                    },
-                    body: count.toString()
-                });
-            } catch (error) {
-                console.error('Error updating the counter:', error);
-            }
-        }
-        window.onload = fetchCounter;
+        // Fetch and set the initial value when the page loads
+        window.onload = function() {
+            fetchInitialValue();
+        };
     </script>
 </body>
 </html>
