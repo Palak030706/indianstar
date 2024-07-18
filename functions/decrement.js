@@ -9,7 +9,7 @@ export async function onRequest(context) {
     if (value === null) {
       value = 0;
     } else {
-      value = parseInt(value, 10);
+      value = parseFloat(value, 10);
     }
   
     // Increment the counter
