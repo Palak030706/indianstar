@@ -9,7 +9,7 @@ export async function onCommentRequest(context) {
     if (comments === null) {
         comments = [];
     } else {
-        comments = JSON.parse(comments);
+        comments = comments.split('\n'); // Assuming comments are stored as newline-separated strings
     }
   
     // Parse the incoming request to get the new comment as plain text
@@ -18,11 +18,11 @@ export async function onCommentRequest(context) {
     // Add the new comment to the comments array
     comments.push(newComment);
   
-    // Store the updated comments array in KV
-    await MYKV.put(commentsKey, comments.string());
+    // Store the updated comments array in KV as a newline-separated string
+    await MYKV.put(commentsKey, comments.join('\n'));
   
     // Return the updated comments in the response
-    return new Response(comments, {
+    return new Response(comments.join('\n'), {
         headers: { 'content-type': 'text/plain' },
     });
 }
