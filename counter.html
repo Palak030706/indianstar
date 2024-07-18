@@ -31,6 +31,9 @@
         <div class="counter" id="counter">Loading...</div>
         <button onclick="incrementCounter()">Increment</button>
         <button onclick="decrementCounter()">Decrement</button>
+        <button onclick="half()">half</button>
+        <button onclick="double()">double</button>
+        <button onclick="reset()">reset</button>
     </div>
 
     <script>
@@ -51,6 +54,48 @@
         async function decrementCounter() {
      try {
                 const response = await fetch('/decrement');
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("counter").innerText = counterValue;
+                } else {
+                    console.error('Failed to fetch initial value');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        async function half() {
+     try {
+                const response = await fetch('/half');
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("counter").innerText = counterValue;
+                } else {
+                    console.error('Failed to fetch initial value');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        async function double() {
+     try {
+                const response = await fetch('/double');
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("counter").innerText = counterValue;
+                } else {
+                    console.error('Failed to fetch initial value');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        async function reset() {
+     try {
+                const response = await fetch('/reset');
                 if (response.ok) {
                     const data = await response.text();
                     counterValue = data;
