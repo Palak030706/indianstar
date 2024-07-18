@@ -38,7 +38,7 @@
                 if (response.ok) {
                     const data = await response.text();
                     counterValue = data;
-                    document.getElementById("Decrement").innerText = counterValue;
+                    document.getElementById("counter").innerText = counterValue;
                 } else {
                     console.error('Failed to fetch initial value');
                 }
@@ -53,7 +53,7 @@
                 if (response.ok) {
                     const data = await response.text();
                     counterValue = data;
-                    document.getElementById("Decrement").innerText = counterValue;
+                    document.getElementById("counter").innerText = counterValue;
                 } else {
                     console.error('Failed to fetch initial value');
                 }
