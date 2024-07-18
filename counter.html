@@ -44,6 +44,15 @@
         <div class="counter" id="counter">0</div>
         <button onclick="incrementCounter()">Increment</button>
     </div>
+    
+    <script>
+        let count = 0;
+
+        function incrementCounter() {
+            count++;
+            document.getElementById('counter').innerText = count;
+        }
+    </script>
 </body>
 </html>
 
