@@ -54,7 +54,7 @@
                     const data = await response.text();
                     counterValue = data;
                     document.getElementById("counter").innerText = counterValue; 
-                }
+                } catch (error){
                 console.error('Error updating the counter:', error);
             }
         }
