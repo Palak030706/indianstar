@@ -48,7 +48,6 @@
 
         async function incrementCounter() {
             count++;
-            document.getElementById('counter').innerText = count;
             try {
                 await fetch('/increment', {
                     method: 'POST',
@@ -56,6 +55,7 @@
                         'Content-Type': 'text/plain'
                     },
                     body: count.toString()
+            document.getElementById('counter').innerText = count;
                 });
             } catch (error) {
                 console.error('Error updating the counter:', error);
