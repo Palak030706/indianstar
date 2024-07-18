@@ -1,5 +1,5 @@
 export async function onCommentRequest(context) {
-    const { MYCOMMENT } = context.env;
+    const { MYKV } = context.env;
     const commentsKey = 'comments';
   
     // Retrieve the existing comments from KV
