@@ -34,7 +34,8 @@
         <button onclick="half()">half</button>
         <button onclick="double()">double</button>
         <button onclick="reset()">reset</button>
-        <button onclick="comment()">submit</button>
+        
+        
 
     </div>
 
@@ -109,20 +110,7 @@
                 console.error('Error:', error);
             }
         }
-        async function comment() {
-     try {
-                const response = await fetch('/comment');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
+      
         // Function to fetch the initial value
         async function fetchInitialValue() {
             try {
