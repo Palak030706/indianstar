@@ -40,7 +40,7 @@
                 const response = await fetch('/helloworld');
                 const text = await response.text();
                 count = parseInt(text, 10);
-                document.getElementById('counter').innerText = count;
+                document.getElementById('counter').innerText = counterValue;
             } catch (error) {
                 console.error('Error fetching the counter:', error);
                 document.getElementById('counter').innerText = 'Error';
@@ -48,17 +48,13 @@
         }
 
         async function incrementCounter() {
-            count++;
-            document.getElementById('counter').innerText = count;
             try {
-                await fetch('/increment', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain'
-                    },
-                    body: count.toString()
-                });
-            } catch (error) {
+                const response = await fetch('/incrementcounter');
+                if (response.ok) {
+                    const data = await response.text();
+                    counterValue = data;
+                    document.getElementById("counter").innerText = counterValue; 
+                }
                 console.error('Error updating the counter:', error);
             }
         }
