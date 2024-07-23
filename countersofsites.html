@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch Counter Example</title>
+    <title>Fetch Counters from Different Domains</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,28 +30,35 @@
 </head>
 <body>
     <div class="counter-container">
-        <div class="counter" id="counter">Fetching...</div>
-        <button onclick="fetchCounter()">Refresh Counter</button>
+        <div class="counter" id="counter1">Fetching...</div>
+        <div class="counter" id="counter2">Fetching...</div>
+        <div class="counter" id="counter3">Fetching...</div>
+        <button onclick="fetchCounters()">Refresh Counters</button>
     </div>
 
     <script>
-        async function fetchCounter() {
+        async function fetchCounter(url, elementId) {
             try {
-                const response = await fetch('https://littleindianstar.com/counter'); 
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const text = await response.text();
-                const counterValue = doc.getElementById('counter').innerText;
-                document.getElementById('counter').innerText = counterValue;
+                document.getElementById(elementId).innerText = text;
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
-                document.getElementById('counter').innerText = 'Error fetching data';
+                document.getElementById(elementId).innerText = 'Error fetching data';
             }
         }
 
-        // Fetch counter data on page load
-        fetchCounter();
+        function fetchCounters() {
+            fetchCounter('https://burgerslicy.com/count', 'counter1'); // Replace with actual URL
+            fetchCounter('https://goodbeing.pages.dev/counter', 'counter2'); // Replace with actual URL
+            fetchCounter('https://littleindianstar.com/counter', 'counter3'); // Replace with actual URL
+        }
+
+        // Fetch counters on page load
+        fetchCounters();
     </script>
 </body>
 </html>
