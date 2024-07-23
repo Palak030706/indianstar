@@ -53,20 +53,5 @@
         </div>
         <ul class="comments" id="comment-list"></ul>
     </div>
-
-    <script>
-        function addComment() {
-            const commentInput = document.getElementById('comment-input');
-            const commentList = document.getElementById('comment-list');
-
-            if (commentInput.value.trim() !== '') {
-                const newComment = document.createElement('li');
-                newComment.textContent = commentInput.value;
-                commentList.appendChild(newComment);
-                commentInput.value = '';
-            }
-        }
-    </script>
 </body>
 </html>
-
