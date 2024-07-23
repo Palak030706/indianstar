@@ -24,7 +24,7 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.text();
-                document.getElementById(elementId).innerText = `Counter: ${data.counter}`;
+                document.getElementById(elementId).innerText = `Counter: ${data}`;
             } catch (error) {
                 document.getElementById(elementId).innerText = `Error: ${error.message}`;
             }
