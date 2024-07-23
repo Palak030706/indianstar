@@ -1,5 +1,5 @@
 export async function onRequest(context) {
-    const { MYKVSTORE } = context.env;
+    const { MYKV } = context.env;
     const { searchParams } = new URL(context.request.url);
     const action = searchParams.get('action');
 
@@ -20,6 +20,6 @@ export async function onRequest(context) {
         return new Response(counterValue);
     }
 
-    await MYKVSTORE.put('counter',counterValue);
+    await MYKV.put('counter',counterValue);
     return new Response(counterValue);
 }
