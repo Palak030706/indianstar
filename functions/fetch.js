@@ -22,9 +22,9 @@ app.get('/aggregate-counters', async (req, res) => {
     const requests = urls.map(url => axios.get(url));
     const responses = await Promise.all(requests);
 
-    const total = responses.reduce((sum, response) => sum + response.data.count, 0);
+    const total = responses.reduce((sum, response) => sum + parseInt(response.data, 10), 0);
 
-    res.json({ total });
+    res.send(total.toString());
   } catch (error) {
     res.status(500).send('Error aggregating counters');
   }
