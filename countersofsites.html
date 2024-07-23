@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Counters</title>
+    <style>
+        .counter {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Counter Values from Different Sites</h1>
+    <div id="burgerslicy" class="counter">Loading counter 1...</div>
+    <div id="goodbeing" class="counter">Loading counter 2...</div>
+    <div id="littleindianstar" class="counter">Loading counter 3...</div>
+
+    <script>
+        async function fetchCounter(url, elementId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                document.getElementById(elementId).innerText = `Counter: ${data.counter}`;
+            } catch (error) {
+                document.getElementById(elementId).innerText = `Error: ${error.message}`;
+            }
+        }
+
+        // Replace the URLs with the actual URLs to fetch the counters from
+        fetchCounter('https://burgerslicy.com/count', 'burgerslicy');
+        fetchCounter('https://goodbeing.pages.dev/counter', 'goodbeing');
+        fetchCounter('https://littleindianstar.com/counter', 'littleindianstar');
+    </script>
+</body>
+</html>
