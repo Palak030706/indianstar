@@ -46,30 +46,3 @@
             </script>
           </body>
           </html>
-        `, {
-          headers: { 'Content-Type': 'text/html' }
-        });
-      }
-    } else if (request.method === 'POST' && pathname === '/comments') {
-      // Add a new comment
-      const comment = await request.text();
-      if (!comment) {
-        return new Response('Invalid comment', { status: 400 });
-      }
-  
-      // Get the existing comments
-      const comments = await MYKV.get('comments');
-      const commentsArray = comments ? comments.split('\n') : [];
-  
-      // Add the new comment to the array
-      commentsArray.push(comment);
-  
-      // Save the updated comments back to KV
-      await MYKV.put('comments', commentsArray.join('\n'));
-  
-      return new Response('Comment added', { status: 201 });
-    }
-  
-    return new Response('Not found', { status: 404 });
-  }
-  
