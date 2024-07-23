@@ -7,22 +7,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=3.0">
-        <title>Comment Box</title>
+        <title>Leave a comment</title>
       </head>
       <body>
     <style>
         body {
             display: flex;
-            justify-content: justify;
-            align-items: justify;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
             font-family: Arial, sans-serifs;
         }
         .counter-container {
-            text-align: justify;
-        }
-        .comment-container{
-            text-align: inherit;
+            text-align: center;
         }
         .counter {
             font-size: 2rem;
@@ -32,6 +29,17 @@
             padding: 10px 20px;
             font-size: 1rem;
             cursor: pointer;
+        }
+        .comments-list {
+            margin-top: 20px;
+            list-style: none;
+            padding: 0;
+        }
+        .comment {
+            padding: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 10px;
+            border-radius: 4px;
         }
     </style>
 </head>
