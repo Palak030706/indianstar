@@ -1,25 +1,35 @@
-export async function onRequest(context) {
-    const { MYKV } = context.env;
-    const counterKey = 'counter';
+const express = require('express');
+const axios = require('axios');
+const app = express();
+const port = 3000;
 
-    // Retrieve the current counter value from KV
-    let value = await MYKV.get(counterKey);
-    
-    // Initialize the counter if it doesn't exist
-    if (value === null) {
-        value = 0;
-    } else {
-        value = parseFloat(value, 10);
-    }
-    
-    // Increment the counter
-    value -= 1;
-    
-    // Store the new value in KV
-    await MYKV.put(counterKey, value.toString());
-    
-    // Return the current counter value in the response
-    return new Response(`${value}`, {
-        headers: { 'content-type': 'text/plain' },
-    });
-}
+// Enable CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.get('/aggregate-counters', async (req, res) => {
+  try {
+    // Replace with actual URLs of the counters
+    const urls = [
+      'https://burgerslicy.com/count',
+      'https://goodbeing.pages.dev/counter',
+      'https://littleindianstar.com/counter'
+    ];
+
+    const requests = urls.map(url => axios.get(url));
+    const responses = await Promise.all(requests);
+
+    const total = responses.reduce((sum, response) => sum + response.data.count, 0);
+
+    res.json({ total });
+  } catch (error) {
+    res.status(500).send('Error aggregating counters');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
