@@ -41,10 +41,7 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const html = await response.text();
-                // Assuming the counter is in an element with ID 'counter' in the HTML
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+                const text = await response.text();
                 const counterValue = doc.getElementById('counter').innerText;
                 document.getElementById('counter').innerText = counterValue;
             } catch (error) {
