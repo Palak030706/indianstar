@@ -23,7 +23,7 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const data = await response.json();
+                const data = await response.text();
                 document.getElementById(elementId).innerText = `Counter: ${data.counter}`;
             } catch (error) {
                 document.getElementById(elementId).innerText = `Error: ${error.message}`;
