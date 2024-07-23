@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Counter</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Comment Box</title>
+      </head>
+      <body>
     <style>
         body {
             display: flex;
@@ -131,5 +137,45 @@
             fetchInitialValue();
         };
     </script>
+     <body>
+        <h1>Comment Box</h1>
+        <form id="comment-form">
+          <textarea id="comment" placeholder="Add your comment"></textarea><br>
+          <button type="submit">Submit</button>
+        </form>
+        <h2>Comments</h2>
+        <div id="comments"></div>
+
+        <script>
+          async function loadComments() {
+            const response = await fetch('/comments');
+            const comments = await response.text();
+            const commentsArray = comments ? comments.split('\\n') : [];
+            const commentsDiv = document.getElementById('comments');
+            commentsDiv.innerHTML = '';
+            commentsArray.forEach(comment => {
+              const commentElement = document.createElement('p');
+              commentElement.textContent = comment;
+              commentsDiv.appendChild(commentElement);
+            });
+          }
+
+          document.getElementById('comment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const comment = document.getElementById('comment').value;
+            if (!comment) return;
+            await fetch('/comments', {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain' },
+              body: comment
+            });
+            document.getElementById('comment').value = '';
+            loadComments();
+          });
+
+          // Load comments on page load
+          loadComments();
+        </script>
+      </body>
 </body>
 </html>
