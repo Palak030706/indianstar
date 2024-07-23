@@ -3,7 +3,7 @@ export async function onRequest(context) {
     const { searchParams } = new URL(context.request.url);
     const action = searchParams.get('action');
 
-    let counterValue = await MYKVSTORE.get('counter');
+    let counterValue = await MYKV.get('counter');
     counterValue = parseFloat(counterValue) || 0;
 
     if (action ==='increment') {
