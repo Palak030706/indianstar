@@ -37,7 +37,7 @@
     <script>
         async function fetchCounter() {
             try {
-                const response = await fetch('https://burgerslicy.com/count'); 
+                const response = await fetch('https://littleindianstar.com/counter'); 
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -45,8 +45,8 @@
                 // Assuming the counter is in an element with ID 'counter' in the HTML
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                const counterValue = doc.getElementById('count').innerText;
-                document.getElementById('count').innerText = counterValue;
+                const counterValue = doc.getElementById('counter').innerText;
+                document.getElementById('counter').innerText = counterValue;
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
                 document.getElementById('counter').innerText = 'Error fetching data';
