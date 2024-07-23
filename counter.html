@@ -22,12 +22,21 @@
             text-align: center;
         }
         .counter {
-            font-size: 2rem;
-            margin: 20px 0;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            resize: none;
         }
         button {
             padding: 10px 20px;
-            font-size: 1rem;
+            font-size: 24px;
             cursor: pointer;
         }
         .comments-list {
@@ -149,7 +158,7 @@
         };
     </script>
      <body>
-        <h1>Comment Box</h1>
+        <h1>Leave a comment</h1>
         <form id="comment-form">
           <textarea id="comment" placeholder="Add your comment"></textarea><br>
           <button type="submit">Submit</button>
