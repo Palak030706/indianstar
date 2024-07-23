@@ -4,15 +4,61 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>File URLs</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
     </head>
     <body>
-        <h1>Hiii...Welcome . Here you can see some of the files</h1>
-        <ul id="file-urls">
-            <li><a href= "https://burgerslicy.com/count" target="_blank">burgerslicy ()</a></li>;
-             <li><a href= "https://goodbeing.pages.dev/counter" target="_blank">goodbeing ()</a></li>   
-             <li><a href= "https://littleindianstar.com/counter"target="_blank">littleindianstar ()</a></li>
-    
-        </ul>
-        </ul>
-    </body>
+        <h1>Links Table</h1>
+        <table id="linksTable">
+            <thead>
+                <tr>
+                    <th>Link Text</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be added here -->
+            </tbody>
+        </table>
+    <script>
+      const links = [
+            { text: 'khushi', url: 'https://burgerslicy.com/count' },
+            { text: 'vidhi', url: 'https://goodbeing.dev.pages/counter' },
+            { text: 'palak', url: 'https://littleindianstar.com/counter' }
+        ];
+
+        // Function to populate table
+        function populateTable() {
+            const tableBody = document.querySelector('#linksTable tbody');
+            links.forEach(link => {
+                const row = document.createElement('tr');
+                const cellText = document.createElement('td');
+                const cellUrl = document.createElement('td');
+
+                cellText.textContent = link.text;
+                cellUrl.innerHTML = `<a href="${link.url}" target="_blank">${link.url}</a>`;
+
+                row.appendChild(cellText);
+                row.appendChild(cellUrl);
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Call function to populate table on page load
+        window.onload = populateTable;
+    </script>
+</body>
+</html>
     </html>
