@@ -31,7 +31,7 @@ export async function onRequest(context) {
       value *= 2;
       break;
       case 'reset':
-        value == 0;
+        value = 0;
         break;
     default:
       return new Response('Invalid action', {
