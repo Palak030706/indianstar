@@ -14,7 +14,7 @@ export async function onRequest(context) {
 
   // Get the action parameter from the request URL
   const url = new URL(context.request.url)
-  const action = url.searchParams.get('increment');
+  const action = url.searchParams.get('action');
 
   // Perform the appropriate action
   switch(action) {
