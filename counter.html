@@ -62,49 +62,56 @@
             <ul class="comments-list" id="comments-list"></ul>
         </div>
     </div>
-    <script>
-        let counterValue;
+<script>
+    let counterValue; // Declare counterValue at a higher scope
 
-        async function fetchCounter(action) {
-            try {
-                const response = await fetch(`/{actions}?action=$action`);
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch counter value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
-        function updateCounter(action) {
-            fetchCounter(action);
-        }
-
-        function reset() {
-            counterValue = 0;
+async function incrementCounter() {
+    await updateCounter('increment');
+}
+async function decrementCounter() {
+    await updateCounter('decrement');
+}
+async function halfCounter() {
+    await updateCounter('half');
+}
+async function doubleCounter() {
+    await updateCounter('double');
+}
+async function resetfunc() {
+    await updateCounter('reset');
+}
+async function updateCounter(action) {
+    try {
+        const response = await fetch(`/actions?action=${action}`);
+        if (response.ok) {
+            const data = await response.text();
+            counterValue = data;
             document.getElementById("counter").innerText = counterValue;
+        } else {
+            console.error('Failed to fetch counter value');
         }
-
-        function addComment() {
-            const commentInput = document.getElementById("comment-input");
-            const commentText = commentInput.value.trim();
-            if (commentText !== '') {
-                const commentList = document.getElementById("comments-list");
-                const commentElement = document.createElement("li");
-                commentElement.className = "comment";
-                commentElement.innerText = commentText;
-                commentList.appendChild(commentElement);
-                commentInput.value = '';
-            }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+async function fetchInitialValue() {
+    try {
+        const response = await fetch('/actions');
+        if (response.ok) {
+            const data = await response.text();
+            counterValue = data;
+            document.getElementById("counter").innerText = counterValue;
+        } else {
+            console.error('Failed to fetch initial value');
         }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+window.onload = function() {
+    fetchInitialValue();
+};
 
-        document.addEventListener("DOMContentLoaded", () => {
-            fetchCounter();
-        });
     </script>
 </body>
 </html>
