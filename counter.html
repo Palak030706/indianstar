@@ -56,11 +56,6 @@
             <button onclick="updateCounter('double')">Double</button>
             <button onclick="updateCounter('reset')">Reset</button>
         </div>
-        <div class="comments-container">
-            <textarea id="comment-input" placeholder="Leave a comment"></textarea>
-            <button onclick="addComment()">Submit Comment</button>
-            <ul class="comments-list" id="comments-list"></ul>
-        </div>
     </div>
 <script>
     let counterValue; // Declare counterValue at a higher scope
@@ -101,19 +96,5 @@ window.onload = function() {
     fetchInitialValue();
 };
 </script>
-<script>
-          async function addComment() {
-    const comment = document.getElementById('comments').value;
-    const response = await fetch(`/comments?comments=${comment}}`);
-    if (response.ok) {
-        console.log('Message Saved');
-    } else {
-        console.error('Failed to save message');
-    }
-}
-window.onload = function(){
-    addComment();
-}
-        </script>
-      </body>
+</body>
 </html>
