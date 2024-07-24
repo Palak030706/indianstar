@@ -39,12 +39,11 @@ export async function onRequest(context) {
         headers: { 'content-type': 'text/plain' },
       });
   }
-
   // Store the new value in KV
   await MYKV.put(counterKey, value.toString());
 
   // Return the current counter value in the response
-  return new Response(`{value}`, {
+  return new Response(`${value}`, {
     headers: { 'content-type': 'text/plain' },
   });
 }
