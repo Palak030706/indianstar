@@ -66,96 +66,31 @@
     </div>
 
     <script>
-        async function incrementCounter() {
-     try {
-                const response = await fetch('/increment');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
+        let counterValue;
+
+async function fetchCounter(action = '') {
+    try {
+        const response = await fetch(`/${action}`);
+        if (response.ok) {
+            const data = await response.text();
+            counterValue = data;
+            document.getElementById("counter").innerText = counterValue;
+        } else {
+            console.error('Failed to fetch counter value');
         }
-        async function decrementCounter() {
-     try {
-                const response = await fetch('/decrement');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-        async function half() {
-     try {
-                const response = await fetch('/half');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-        async function double() {
-     try {
-                const response = await fetch('/double');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-        async function reset() {
-     try {
-                const response = await fetch('/reset');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-      
-        // Function to fetch the initial value
-        async function fetchInitialValue() {
-            try {
-                const response = await fetch('/helloworld');
-                if (response.ok) {
-                    const data = await response.text();
-                    counterValue = data;
-                    document.getElementById("counter").innerText = counterValue;
-                } else {
-                    console.error('Failed to fetch initial value');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-        // Fetch and set the initial value when the page loads
-        window.onload = function() {
-            fetchInitialValue();
-        };
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+function updateCounter(action) {
+    fetchCounter(action);
+}
+
+function reset() {
+    counterValue = 0;
+    document.getElementById("counter").innerText = counterValue;
+}
     </script>
      <body>
         <h1>Leave a comment</h1>
