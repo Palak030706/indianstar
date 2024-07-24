@@ -65,21 +65,7 @@
 <script>
     let counterValue; // Declare counterValue at a higher scope
 
-async function incrementCounter() {
-    await updateCounter('increment');
-}
-async function decrementCounter() {
-    await updateCounter('decrement');
-}
-async function halfCounter() {
-    await updateCounter('half');
-}
-async function doubleCounter() {
-    await updateCounter('double');
-}
-async function resetfunc() {
-    await updateCounter('reset');
-}
+
 async function updateCounter(action) {
     try {
         const response = await fetch(`/actions?action=${action}`);
@@ -93,6 +79,9 @@ async function updateCounter(action) {
     } catch (error) {
         console.error('Error:', error);
     }
+}
+window.onload = function(){
+    updateCounter();
 }
 async function fetchInitialValue() {
     try {
@@ -111,7 +100,34 @@ async function fetchInitialValue() {
 window.onload = function() {
     fetchInitialValue();
 };
-
-    </script>
-</body>
+</script>
+<script>
+          async function loadComments() {
+            const response = await fetch('/comments');
+            const comments = await response.text();
+            const commentsArray = comments ? comments.split('\\n') : [];
+            const commentsDiv = document.getElementById('comments');
+            commentsDiv.innerHTML = '';
+            commentsArray.forEach(comment => {
+              const commentElement = document.createElement('p');
+              commentElement.textContent = comment;
+              commentsDiv.appendChild(commentElement);
+            });
+          }
+          document.getElementById('comment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const comment = document.getElementById('comment').value;
+            if (!comment) return;
+            await fetch('/comments', {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain' },
+              body: comment
+            });
+            document.getElementById('comment').value = '';
+            loadComments();
+          });
+          // Load comments on page load
+          loadComments();
+        </script>
+      </body>
 </html>
