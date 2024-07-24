@@ -44,7 +44,7 @@ export async function onRequest(context) {
   await MYKV.put(counterKey, value.toString());
 
   // Return the current counter value in the response
-  return new Response(`Counter value: ${value}`, {
+  return new Response(`${value}`, {
     headers: { 'content-type': 'text/plain' },
   });
 }
