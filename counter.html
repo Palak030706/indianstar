@@ -80,7 +80,7 @@ window.onload = function(){
 }
 async function fetchInitialValue() {
     try {
-        const response = await fetch('/actions');
+        const response = await fetch('/helloworld');
         if (response.ok) {
             const data = await response.text();
             counterValue = data;
