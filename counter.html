@@ -102,32 +102,18 @@ window.onload = function() {
 };
 </script>
 <script>
-          async function loadComments() {
-            const response = await fetch('/comments');
-            const comments = await response.text();
-            const commentsArray = comments ? comments.split('\\n') : [];
-            const commentsDiv = document.getElementById('comments');
-            commentsDiv.innerHTML = '';
-            commentsArray.forEach(comment => {
-              const commentElement = document.createElement('p');
-              commentElement.textContent = comment;
-              commentsDiv.appendChild(commentElement);
-            });
-          }
-          document.getElementById('comment-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const comment = document.getElementById('comment').value;
-            if (!comment) return;
-            await fetch('/comments', {
-              method: 'POST',
-              headers: { 'Content-Type': 'text/plain' },
-              body: comment
-            });
-            document.getElementById('comment').value = '';
-            loadComments();
-          });
-          // Load comments on page load
-          loadComments();
+          async function addComment() {
+    const message = document.getElementById('commentInput').value;
+    const response = await fetch(`/comments?comment=${message}`);
+    if (response.ok) {
+        console.log('Message Saved');
+    } else {
+        console.error('Failed to save message');
+    }
+}
+window.onload = function(){
+    addComment();
+}
         </script>
       </body>
 </html>
