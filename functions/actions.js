@@ -30,6 +30,9 @@ export async function onRequest(context) {
     case 'double':
       value *= 2;
       break;
+      case 'reset':
+        value == 0;
+        break;
     default:
       return new Response('Invalid action', {
         status: 400,
