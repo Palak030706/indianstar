@@ -14,7 +14,7 @@ export async function onRequest(context) {
   
     // Get the action parameter from the request URL
     const url = new URL(context.request.url);
-    const action = url.searchParams.get('action');
+    const action = url.searchParams.get('increment');
   
     const operations = {
         increment: (val) => val + 1,
@@ -41,4 +41,3 @@ export async function onRequest(context) {
         headers: { 'content-type': 'text/plain' },
       });
     }
-  
