@@ -70,7 +70,7 @@
 
 async function fetchCounter(action = '') {
     try {
-        const response = await fetch(`/${action}`);
+        const response = await fetch(`/${actions}`);
         if (response.ok) {
             const data = await response.text();
             counterValue = data;
