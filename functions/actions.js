@@ -16,33 +16,29 @@ export async function onRequest(context) {
     const url = new URL(context.request.url);
     const action = url.searchParams.get('action');
   
-    // Perform the appropriate action
-    switch(action) {
-      case 'increment':
-        value += 1;
-        break;
-      case 'decrement':
-        value -= 1;
-        break;
-      case 'half':
-        value /= 2;
-        break;
-      case 'double':
-        value *= 2;
-        break;
-      default:
+    const operations = {
+        increment: (val) => val + 1,
+        decrement: (val) => val - 1,
+        half: (val) => val / 2,
+        double: (val) => val * 2,
+      };
+    
+      // Check if the action is valid
+      if (operations[action]) {
+        value = operations[action](value);
+      } else {
         return new Response('Invalid action', {
           status: 400,
           headers: { 'content-type': 'text/plain' },
         });
+      }
+    
+      // Store the new value in KV
+      await MYKV.put(counterKey, value.toString());
+    
+      // Return the current counter value in the response
+      return new Response(`Counter value: ${value}`, {
+        headers: { 'content-type': 'text/plain' },
+      });
     }
-  
-    // Store the new value in KV
-    await MYKV.put(counterKey, value.toString());
-  
-    // Return the current counter value in the response
-    return new Response(`Counter value: ${value}`, {
-      headers: { 'content-type': 'text/plain' },
-    });
-  }
   
