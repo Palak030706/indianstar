@@ -65,9 +65,9 @@
     <script>
         let counterValue;
 
-        async function fetchCounter(action = '') {
+        async function fetchCounter(action) {
             try {
-                const response = await fetch(`/${actions}`);
+                const response = await fetch(`/{actions}?action=$action`);
                 if (response.ok) {
                     const data = await response.text();
                     counterValue = data;
