@@ -24,8 +24,8 @@ export async function onRequest(context) {
       };
     
       // Check if the action is valid
-      if (operations[action]) {
-        value = operations[action](value);
+      if (operations[increment]) {
+        value = operations[increment](value);
       } else {
         return new Response('Invalid action', {
           status: 400,
