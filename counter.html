@@ -103,8 +103,8 @@ window.onload = function() {
 </script>
 <script>
           async function addComment() {
-    const message = document.getElementById('commentInput').value;
-    const response = await fetch(`/comments?comment=${message}`);
+    const comment = document.getElementById('comments').value;
+    const response = await fetch(`/comments?comments=${comment}}`);
     if (response.ok) {
         console.log('Message Saved');
     } else {
