@@ -1,0 +1,75 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+     background: url(""https://media.wired.com/photos/5e8fb09da231050008136022/master/w_1600%2Cc_limit/FT-App-V1.jpg) no-repeat center center;
+  }
+  
+  h2 {
+    margin-bottom: 10px;
+  }
+  
+  #videos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  video {
+    width: 300px;
+    max-width: 45%;
+    background: #000;
+    border-radius: 8px;
+  }
+  
+  #controls {
+    margin: 15px 0;
+  }
+  
+  #controls button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    transition: background 0.2s;
+  }
+  
+  #controls button:hover {
+    background-color: #0056b3;
+  }
+  
+  #chat {
+    margin-top: 20px;
+    width: 60%;
+  }
+  
+  #messages {
+    height: 200px;
+    border: 1px solid #ccc;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 6px;
+  }
+  
+  input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  button {
+    padding: 10px;
+    border-radius: 6px;
+  }
+  

@@ -1,7 +1,271 @@
-<p></p><a href="pyramid.html">Pyramid</a><br>
-<a href="logo.html">logo</a><br>
-<a href="print ABC.html">Print</a><br>
-<a href="hereispic.html">Picture</a><br>
-<a href="counter.html">counter</a></p>
-<a href="decrement.html">counter</a></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Video Chat App</title>
+  <style>
+    * { box-sizing: border-box; }
 
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: rgb(240, 163, 227);
+      flex-direction: column;
+    }
+
+    #welcome-logo {
+      width: 800px;
+      height: 500px;
+      margin-bottom: 60px;
+    }
+
+    .screen {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .screen.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .centered {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 20px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+
+    video {
+      border: 2px solid #ccc;
+      margin: 5px;
+      width: 500px;
+      height: 300px;
+    }
+
+    #video-container, #controls {
+      margin-top: 20px;
+    }
+
+    #controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #username-display {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #chat {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    #chat-messages {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: white;
+      color: black;
+    }
+
+    #chat-input {
+      width: 80%;
+    }
+
+    #sendBtn {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Welcome Screen -->
+  <div id="welcomeScreen" class="screen active centered">
+    <img src="image.png" alt="Logo" id="welcome-logo" />
+    <h1>Welcome to our platform</h1>
+    <p>Your secure place for video conferencing.</p>
+    <button onclick="showUsernameScreen()">Continue</button>
+  </div>
+
+  <!-- Username Screen -->
+  <div id="usernameScreen" class="screen centered">
+    <input type="text" id="username-input" placeholder="Enter your username" />
+    <button id="set-username">Set Username</button>
+  </div>
+
+  <!-- Video Chat Screen -->
+  <div id="videoScreen" class="screen centered">
+    <h2>Video Chat</h2>
+    <div id="video-container">
+      <video id="local-video" autoplay muted></video>
+      <video id="remote-video" autoplay></video>
+      <div id="username-display"></div>
+    </div>
+
+    <div id="controls">
+      <button id="hang-up">Hang Up</button>
+      <button id="mute">Mute</button>
+    </div>
+
+    <div id="chat">
+      <h3>Chat</h3>
+      <div id="chat-messages"></div>
+      <input type="text" id="chat-input" placeholder="Type a message..." />
+      <button id="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    let localStream;
+    let peerConnection;
+    let isMuted = false;
+    let username = "";
+
+    const usernameInput = document.getElementById("username-input");
+    const usernameDisplay = document.getElementById("username-display");
+    const muteButton = document.getElementById("mute");
+    const messageInput = document.getElementById("chat-input");
+    const chatMessages = document.getElementById("chat-messages");
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+      });
+      document.getElementById(id).classList.add("active");
+    }
+
+    function showUsernameScreen() {
+      showScreen("usernameScreen");
+    }
+
+    document.getElementById("set-username").addEventListener("click", async () => {
+      username = usernameInput.value.trim();
+      if (!username) return alert("Please enter a valid username.");
+      usernameDisplay.textContent = `You are: ${username}`;
+      showScreen("videoScreen");
+      startCall();
+      socket.emit("user-joined", username);
+    });
+
+    async function startCall() {
+      localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      document.getElementById("local-video").srcObject = localStream;
+
+      peerConnection = new RTCPeerConnection({
+        iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+      });
+
+      localStream.getTracks().forEach(track => {
+        peerConnection.addTrack(track, localStream);
+      });
+
+      peerConnection.ontrack = (event) => {
+        const remoteStream = event.streams[0];
+        const remoteVideo = document.getElementById("remote-video");
+        if (remoteVideo.srcObject !== remoteStream) {
+          remoteVideo.srcObject = remoteStream;
+        }
+      };
+
+      peerConnection.onicecandidate = (event) => {
+        if (event.candidate) {
+          socket.emit("ice-candidate", event.candidate);
+        }
+      };
+
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(offer);
+      socket.emit("offer", offer);
+    }
+
+    function hangUp() {
+      if (peerConnection) peerConnection.close();
+      localStream.getTracks().forEach(track => track.stop());
+      socket.emit("user-left", username);
+      showScreen("welcomeScreen");
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      localStream.getAudioTracks().forEach(track => (track.enabled = !isMuted));
+      muteButton.textContent = isMuted ? "Unmute" : "Mute";
+    }
+
+    function sendMessage() {
+      const message = messageInput.value;
+      if (message.trim()) {
+        socket.emit("chat-message", { username, message });
+        messageInput.value = "";
+      }
+    }
+
+    // Handle incoming chat messages
+    socket.on("chat-message", ({ username: from, message }) => {
+      const messageElement = document.createElement("div");
+      messageElement.textContent = `${from}: ${message}`;
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+
+    // WebRTC Signaling
+    socket.on("offer", async (offer) => {
+      await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+      const answer = await peerConnection.createAnswer();
+      await peerConnection.setLocalDescription(answer);
+      socket.emit("answer", answer);
+    });
+
+    socket.on("answer", (answer) => {
+      peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    });
+
+    socket.on("ice-candidate", (candidate) => {
+      peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+    });
+
+    socket.on("user-joined", (user) => {
+      console.log(`${user} has joined.`);
+    });
+
+    socket.on("user-left", (user) => {
+      console.log(`${user} has left.`);
+    });
+
+    document.getElementById("hang-up").addEventListener("click", hangUp);
+    document.getElementById("mute").addEventListener("click", toggleMute);
+  </script>
+</body>
+</html>
